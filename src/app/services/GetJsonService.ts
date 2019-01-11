@@ -7,7 +7,7 @@ export class GetJsonService {
     constructor(private http: HttpClient) {}
 
     GetJson(fileName: string):Observable<any> {
-        var url = `initData/${fileName}.json`;
+        var url = `./assets/initData/${fileName}.json`;
         return this.http.get(url);
     }
 

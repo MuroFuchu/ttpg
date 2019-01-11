@@ -22,9 +22,7 @@
       <div (click)="prev()" style="z-index: 100;" style="width: 35px;">
         <i [style.display]="!isPrev() ? 'none' : 'block'" class="material-icons">arrow_back</i>
       </div>
-      <ons-carousel #carousel 
-      　swipeable auto-scroll centered
-        id="carousel"
+      <ons-carousel #carousel swipeable auto-scroll centered id="carousel"
         (postchange)="toPostChange($event)">
         <ons-carousel-item *ngFor="let item of photoInfoList;let i = index" (click)="openModal(i)">
           <img class="carousel_photo" [src]="item.Bin" alt="" (error)="isImgErrList[i] = true" style="height: 100%;">

@@ -1,0 +1,17 @@
+[
+    {"LocationID" :"1","Title" :"室蘭中央通り","Address" :"北海道 室蘭市 常盤町１丁目","Latitude":42.31841,"Longitude":140.9701178},
+    {"LocationID" :"2","Title" :"室蘭水族館","Address" :"北海道 室蘭市 祝津町３丁目","Latitude":42.339825,"Longitude":140.943745},
+    {"LocationID" :"3","Title" :"日本製鋼所","Address" :"北海道 室蘭市 茶津町","Latitude":42.319695,"Longitude":140.986877},
+    {"LocationID" :"4","Title" :"海岸町","Address" :"北海道 室蘭市 道道699号線","Latitude":42.31891,"Longitude":140.97256},
+    {"LocationID" :"5","Title" :"蘭西地区","Address" :"北海道 室蘭市 中央町３丁目","Latitude":42.316035,"Longitude":140.975725},
+    {"LocationID" :"6","Title" :"丸井今井室蘭支店","Address" :"北海道 室蘭市 中央町１丁目","Latitude":42.319316,"Longitude":140.970391},
+    {"LocationID" :"7","Title" :"トキカラモイの木造桟橋","Address" :"北海道 室蘭市 海岸町３丁目","Latitude":42.326939,"Longitude":140.967599},
+    {"LocationID" :"8","Title" :"旧国鉄埠頭","Address" :"北海道 室蘭市 築地町","Latitude":42.333461,"Longitude":140.964637},
+    {"LocationID" :"9","Title" :"陣屋海岸","Address" :"北海道 室蘭市 陣屋町１丁目","Latitude":42.365401,"Longitude":140.946223},
+    {"LocationID" :"10","Title" :"茶津岬","Address" :"北海道 室蘭市 茶津町","Latitude":42.32252,"Longitude":140.979634},
+    {"LocationID" :"11","Title" :"陣屋海岸","Address" :"北海道 室蘭市 陣屋町１丁目","Latitude":42.361003,"Longitude":140.952896},
+    {"LocationID" :"12","Title" :"知利別社宅","Address" :"北海道 室蘭市 知利別町４丁目","Latitude":42.365746,"Longitude":141.024736},
+    {"LocationID" :"13","Title" :"府中駅","Address" :"東京都 府中市 宮町１丁目","Latitude":35.6721885,"Longitude":139.74557},
+    {"LocationID" :"14","Title" :"宮古港フェリーターミナル","Address" :"岩手県 宮古市 磯鶏第４地割","Latitude":39.6264713,"Longitude":141.9682083}
+    
+]

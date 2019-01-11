@@ -39,12 +39,12 @@ export class Map implements OnInit {
   iconPathTrip: string = require('../../../../contents/buttons/goToTrip.png');
   iconPathRegist: string = require('../../../../contents/buttons/goToRegist.png');
   */
-  markerPinNormal: string = '../../../../contents/icons/pin_normal.svg';//マーカーピンのアイコンURL
-  markerPinSelected: string = '../../../../contents/icons/pin_free.svg';//マーカーピンのアイコンURL
-  nowPlacePin: string = '../../../../contents/icons/pin_nowPlace.svg';//マーカーピンのアイコンURL
-  iconPathInfo: string = '../../../../contents/buttons/showInfo.png';
-  iconPathTrip: string = '../../../../contents/buttons/goToTrip.png';
-  iconPathRegist: string = '../../../../contents/buttons/goToRegist.png';
+  markerPinNormal: string = './assets/contents/icons/pin_normal.svg';//マーカーピンのアイコンURL
+  markerPinSelected: string = './assets/contents/icons/pin_free.svg';//マーカーピンのアイコンURL
+  nowPlacePin: string = './assets/contents/icons/pin_nowPlace.svg';//マーカーピンのアイコンURL
+  iconPathInfo: string = './assets/contents/buttons/showInfo.png';
+  iconPathTrip: string = './assets/contents/buttons/goToTrip.png';
+  iconPathRegist: string = './assets/contents/buttons/goToRegist.png';
   iconPathRegist2: string = 'src/';
   addressList:any[];
   constructor(private _navigator: OnsNavigator, private _indexedDbService: IndexedDbService, private _googleMapsAPIWrapperEx: GoogleMapsAPIWrapperEx) {}
@@ -63,8 +63,8 @@ export class Map implements OnInit {
         comp.presentLng = position.coords.longitude;
         //comp.presentLat =  42.319744;// 室蘭NISCO仕様
         //comp.presentLng = 140.986007;// 室蘭NISCO仕様
-        comp.presentLat =  39.640479;// 宮古駅仕様
-        comp.presentLng = 141.946646;// 宮古駅仕様
+        //comp.presentLat =  39.640479;// 宮古駅仕様
+        //comp.presentLng = 141.946646;// 宮古駅仕様
 
         comp.changeCenter(comp.presentLat,comp.presentLng);
         comp.getMapData(comp.centerLat,comp.centerLng);
@@ -74,8 +74,8 @@ export class Map implements OnInit {
         ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
           //comp.presentLat =  42.319744;// 室蘭NISCO仕様
           //comp.presentLng = 140.986007;// 室蘭NISCO仕様
-          comp.presentLat =  39.640479;// 宮古駅仕様
-          comp.presentLng = 141.946646;// 宮古駅仕様
+          //comp.presentLat =  39.640479;// 宮古駅仕様
+          //comp.presentLng = 141.946646;// 宮古駅仕様
           comp.changeCenter(comp.presentLat,comp.presentLng);
           comp.getMapData(comp.centerLat,comp.centerLng);
           comp.displayPin();
