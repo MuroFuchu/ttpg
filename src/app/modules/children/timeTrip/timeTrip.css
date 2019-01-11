@@ -1,0 +1,82 @@
+
+  .left {
+    float: left;
+    margin-right: 3px;
+  }
+   
+  .item {
+    margin-bottom: 30px;
+  }
+  
+  .title {
+    font-size: 24px;
+    
+  }
+  
+  .material-icons {
+    font-size:35px;
+  }
+  
+  .btn {
+    color: black;
+    background-color: transparent;
+    box-shadow: none;
+    height: 35px;
+    width: 35px;
+    padding: 0px;
+    margin-right: 10px;
+  }
+  
+  .addressSelect{
+    width: calc(100% - 35px - 10px);
+  }
+  
+  .carousel_text {
+    position: absolute; 
+    bottom: 0; 
+    right: 30px; 
+    margin-bottom: 10px;
+    font-size: 30px;
+    color: darkgray;
+  }
+  
+  .carousel_photo {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .carousel_erricon {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .photoModal {
+    height: 300px;
+    width: 300px;
+    margin: auto;
+  }
+  
+  .modal_text {
+    position: relative;
+    top: 250px;
+    left: 90px;
+    font-size: 30px;
+    color: dimgray;
+  }
+  
+  #carousel {
+    height: 200px; 
+    width: 80%;
+    margin: 0 auto;
+  }

@@ -1,0 +1,28 @@
+
+
+  #photoPreview {
+    width: auto;
+    vertical-align: middle    
+  }
+  
+  .material-icons {
+    font-size:35px;
+  }
+
+  .footer {
+    margin-top: 10px;
+    width: 100%;
+    display:inline-block;
+    text-align: center;
+  }
+
+  .btn {
+    color: black;
+    background-color: transparent;
+    box-shadow: none;
+    height: 35px;
+    width: 35px;
+    padding: 0px;
+    margin-right: 10px;
+    text-align: center;
+  }

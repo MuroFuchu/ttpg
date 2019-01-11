@@ -1,0 +1,41 @@
+.content{
+  background-color:#f9d3d3;
+}
+.menu_title{
+  text-align:center;
+  font-family:Impact;
+  font-size:50px;
+  color:brown;
+  margin:40px 0 10px 0;
+}
+
+.content ons-button{
+  width:220px;
+  height:90px;
+  line-height: 20px;
+  margin:13px;
+  padding-top:10px;
+  font-size:25px;
+  padding-top:30px;
+}
+
+.material-icons{
+  font-size:45px;
+  line-height:0.8px;
+}
+
+.menu_btn_Time_Trip{
+  background-color:#ffb553;
+}
+
+.menu_btn_Registrations{
+  background-color:#4bb5e0;
+}
+
+.menu_btn_map{
+  background-color:#ff716e;
+}
+
+.menu_btn_Upload{
+  background-color:#34314b;
+}

@@ -1,0 +1,16 @@
+<ons-toolbar>
+　 <div class="left"><ons-back-button>Back</ons-back-button></div>
+  <div class="center">写真一覧から探す</div>
+</ons-toolbar>
+<div class="content">
+  <ons-list>
+    <ons-list-item modifier="chevron" tappable *ngFor="let Registration of RegistrationLists" [value]="Registration.Title" (click)="clickPhoto(Registration.LocationID,Registration.PhotoID)">
+      <div>
+          <img [src]="Registration.Bin" alt="Registration.Title" class="dataPicArea">
+      </div>
+      <div>
+        <p class="dataMemoArea-text">{{ Registration.Comment }}</p>
+      </div>
+    </ons-list-item>
+  </ons-list>
+</div>

@@ -1,0 +1,116 @@
+<ons-toolbar>
+  <div class="left"><ons-back-button>Back</ons-back-button></div>
+  <div class="center">地図から探す</div>
+</ons-toolbar>
+<agm-map [latitude]="centerLat" [longitude]="centerLng" [zoom]=15 [disableDoubleClickZoom]="true" (mapDblClick)="dblClickMap($event)">
+  <agm-marker
+    [latitude]="lastClicklat" 
+    [longitude]="lastClicklng"
+    [iconUrl]="{
+      url:markerPinSelected,
+      scaledSize: {
+      width: 40,
+      height: 40
+      }
+    }"
+    [label]="{
+      text: '選択した地点',
+      fontSize: '10px',
+      fontWeight: '700'
+    }
+  ">
+    <agm-info-window>
+      <table>
+        <!-- <tr>
+          <td>x座標：</td>
+          <td>{{lastClicklat}}</td>
+        </tr>
+        <tr>
+          <td>y座標：</td>
+          <td>{{lastClicklng}}</td>
+        </tr> -->
+        <tr>
+          <td>この地点を登録する</td>
+          <td></td>
+        </tr>
+        <tr>
+            <td>地点名</td>
+            <td><ons-input id="mapTitle" [(value)]="txtTitle"></ons-input></td>     
+        </tr>
+        <tr>
+            <td>住所</td>
+            <td>
+              <ons-select [(ngModel)]="selectedAddresses" style="width:200px;">
+                <option *ngFor="let address of addressList">{{address?.formatted_address}}</option>
+              </ons-select>
+            </td>          
+        </tr>
+        <tr>
+          <td>ボタン</td>
+          <td><ons-button (click)="registMapMst(lastClicklat, lastClicklng)" modifier="large" class="btn_regist_point">地点を登録</ons-button></td>
+        </tr>
+      </table>
+    </agm-info-window>
+  </agm-marker>
+  <agm-marker *ngFor="let m of markers;" 
+    [latitude]="m.Latitude" 
+    [longitude]="m.Longitude" 
+    [label]=
+    "{
+      text: m.Title,
+      fontSize: '10px',
+      fontWeight: '700'
+    }"
+    [iconUrl]="{
+      url:m.iconUrl,
+      scaledSize: {
+      width: 40,
+      height: 40
+      }
+    }"
+    (markerClick)="clickMarker(m)"
+    >
+    <agm-info-window>
+      <table>
+        <tr>
+          <td>名称：</td>
+          <td>{{m.Title}}</td>
+        </tr>
+        <tr>
+            <td>住所：</td>
+            <td>{{m.Address}}</td>
+        </tr>
+        <!-- <tr>
+          <td>x座標：</td>
+          <td>{{m.Latitude}}</td>
+        </tr>
+        <tr>
+          <td>y座標：</td>
+          <td>{{m.Longitude}}</td>
+        </tr> -->
+      </table>
+    </agm-info-window>
+  </agm-marker>
+  <agm-marker
+      [latitude]="presentLat" 
+      [longitude]="presentLng"
+      [iconUrl]="{
+        url:nowPlacePin,
+        scaledSize: {
+        width: 40,
+        height: 40
+        }
+      }"
+      [label]="{
+        text: '現在地',
+        fontSize: '10px',
+        fontWeight: '700'
+      }
+      ">
+    </agm-marker>
+</agm-map>
+<div class="btn_area">
+  <ons-button (click)="showInfo()" class="btn_icon_style btn_icon_style_left"><img [src]="iconPathInfo" alt="情報表示"></ons-Button>
+  <ons-button (click)="goToTimeTrip()" class="btn_icon_style btn_icon_style_center"><img [src]="iconPathTrip" alt="TimeTrip画面へ"></ons-Button>
+  <ons-button (click)="goToUpload()" class="btn_icon_style btn_icon_style_right"><img [src]="iconPathRegist" alt="画像アップロード画面へ"></ons-Button>
+</div>

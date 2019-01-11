@@ -1,0 +1,54 @@
+<ons-toolbar>
+  <div class="left"><ons-back-button>Back</ons-back-button></div>
+  <div class="center">写真アップロード</div>
+</ons-toolbar>
+
+<div class="content">
+
+  <!-- 位置 -->
+  <ons-list>
+    <ons-list-item style="width: 100%;">
+      <ons-button class="btn" (click)="goToHome()">
+        <i class="material-icons">home</i>
+      </ons-button>
+      {{ photoAddress }}
+    </ons-list-item>
+  </ons-list>
+
+  <!-- 写真 -->
+  <div id="previewArea">
+    <img #photoPreview id="photoPreview" style="width: 100%; height: auto; text-align: center">
+  </div>
+
+  <!-- 写真の情報 -->
+  <ons-list>
+    <!-- 年 -->
+    <ons-list-header>いつの写真？</ons-list-header>
+    <ons-list-item>
+      <ons-input type="tel" style="width: 130px" [(value)]="photoYear"></ons-input>
+    </ons-list-item>
+    <!-- コメント -->
+    <ons-list-header>写真のコメント</ons-list-header>
+    <ons-list-item>
+      <ons-input type="textarea" style="width: 100%" [(value)]="photoComment"></ons-input>
+    </ons-list-item>
+  </ons-list>
+
+  <!-- フッター -->
+  <div class="footer">
+
+    <!-- 写真をアップロード -->
+    <ons-button id="uploadBtn" class="btn" (click)="uploadPhotoConfirm();">
+      <label class="material-icons">cloud_upload</label>
+    </ons-button>
+
+    <!-- 写真を開く -->
+    <ons-button id="openBtn" class="btn" for="openPhoto">
+      <label class="material-icons">
+        insert_photo
+        <input id="openPhoto" style="display: none" type="file" (change)="changePhoto($event)" [accept]="inputAccept">
+      </label>
+    </ons-button>
+  </div>
+
+</div>

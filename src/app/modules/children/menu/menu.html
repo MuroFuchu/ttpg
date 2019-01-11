@@ -1,0 +1,29 @@
+
+<ons-toolbar>
+  <div class="center" (click)="deleteDataBase()">Menu</div>
+</ons-toolbar>
+<div class="content">
+  <div class="menu_title">
+    Time Trip
+    <br>
+    Photo Gallery
+  </div>
+  <div id="message">{{msg}}</div>
+  <div style="text-align: center; margin: 10px">
+    <ons-button (click)="goToTimeTrip(navi)" class="menu_btn_Time_Trip">
+      <i class="material-icons">restore</i><br>Time Trip
+    </ons-button>
+    <br>
+    <ons-button (click)="goToRegistrationList(navi)" class="menu_btn_Registrations">
+      <i class="material-icons">view_list</i><br>Registrations
+    </ons-button>
+    <br>
+    <ons-button (click)="goToMap(navi)"  class="menu_btn_map">
+        <i class="material-icons">place</i><br>Map
+    </ons-button>
+    <br>
+    <ons-button (click)="goToUpload(navi)" class="menu_btn_Upload" *ngIf="1==2">
+      <i class="material-icons">arrow_upward</i><br>Upload
+    </ons-button>
+  </div>
+</div>
