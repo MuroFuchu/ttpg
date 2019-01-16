@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, HostListener, AfterViewChecked } from
 import { FormsModule } from '@angular/forms';
 
 import { Menu } from '../menu/menu';
+import { Upload } from '../upload/upload';
 
 import * as ons from 'onsenui';
 import {
@@ -13,7 +14,7 @@ import {
 } from 'ngx-onsenui';
 
 import { IndexedDbService } from '../../../services/IndexedDbService';
-import { Upload } from '../upload/upload';
+import { HttpService } from '../../../services/HttpService';
 
 @Component({
   selector: "ons-page[title='timeTrip']",
@@ -42,7 +43,11 @@ export class TimeTrip {
 
   params = null;
 
-  constructor(private _navigator: OnsNavigator, private _indexedDbService: IndexedDbService, private _params: Params) {
+  constructor(private _navigator: OnsNavigator, 
+    private _indexedDbService: IndexedDbService, 
+    private _httpService: HttpService,
+    private _params: Params) {
+      
     this.isConstructor = true;
   }
 

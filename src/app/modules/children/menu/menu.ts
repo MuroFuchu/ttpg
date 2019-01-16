@@ -6,6 +6,7 @@ import {Map} from '../map/map';
 import {RegistrationList} from '../registrationList/registrationList';
 import {Upload} from '../upload/upload';
 import { TimeTrip } from '../timeTrip/timeTrip';
+import { httpTest } from '../httpTest/httpTest';
 
 import {IndexedDbService} from '../../../services/IndexedDbService';//ﾃﾞｭｸｼ
 
@@ -40,6 +41,10 @@ export class Menu {
     this._navigator.nativeElement.pushPage(TimeTrip, {data: { "LocationID" : r}});
   }
   
+  goToHttpTest(){
+    this._navigator.nativeElement.pushPage(httpTest, {data: {hoge: "fuga"}});
+  }
+
   goToMap() {
     this._navigator.nativeElement.pushPage(Map, {data: {hoge: "fuga"}});
   }
