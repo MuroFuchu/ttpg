@@ -38,7 +38,7 @@ export class HttpService {
         .append("Latitude", String(latitude))
         .append("Longitude", String(longitude));
 
-        return this.http.put<AddLocationResponseModel>(`${this.webApiEndPoint}/AddLocation`, { params: params });
+        return this.http.put<AddLocationResponseModel>(`${this.webApiEndPoint}/AddLocation`, params);
     }
 
     /**
@@ -68,7 +68,7 @@ export class HttpService {
             .append("Comment", comment)
             .append("Bin", bin);
 
-        return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, { params: params });
+        return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params);
     }    
 
 }

@@ -19,7 +19,6 @@ import { Menu } from '../menu/menu';
 export class httpTest {
   arg1=""; arg2=""; arg3=""; arg4="";
 
-
   constructor(private _navigator: OnsNavigator , private _indexedDbService: IndexedDbService, private _httpService: HttpService) {}
 
   goToMenu() {
@@ -28,21 +27,49 @@ export class httpTest {
 
   async goGetLocation() {
     var location = await this._httpService.GetLocation(Number(this.arg1), Number(this.arg2), Number(this.arg3)).toPromise();
-    console.log(location);
+    let m;
+    location.locations.map(v => {
+      m = [
+        `locationID:${v.locationID}`,
+        `title:${v.title}`,
+        `address:${v.address}`,
+        `latitude:${v.latitude}`,
+        `longitude:${v.longitude}`,
+        `distance:${v.distance}`
+      ];
+      ons.notification.alert({ messageHTML: this.forHtml(m), title:'GetLocation' });
+    }, this);
   }
   
   async goAddLocation() {
     var location = await this._httpService.AddLocation(this.arg1, this.arg2, Number(this.arg3), Number(this.arg4)).toPromise();
     console.log(location);
+    ons.notification.alert({ messageHTML: `statusCd:${location.statusCd}<br>locationCd:${location.locationId}`, title:'GetLocation' });
   }
 
   async goGetPhoto() {
     var photo = await this._httpService.GetPhoto(Number(this.arg1), Number(this.arg2)).toPromise();
-    console.log(photo);
+    let m;
+    photo.photos.map(v => {
+      m = [
+        `year:${v.year}`,
+        `comment:${v.comment}`,
+        `bin:${v.bin}`
+      ];
+      ons.notification.alert({ messageHTML: this.forHtml(m), title:'GetLocation' });
+    }, this);
   }
 
   async goAddPhoto() {
     var photo = await this._httpService.AddPhoto(Number(this.arg1), Number(this.arg2), this.arg3, this.arg4).toPromise();
-    console.log(photo);
+    ons.notification.alert({ messageHTML: `statusCd:${photo.statusCd}<br>photoId:${photo.photoId}`, title:'GetLocation' });
+  }
+
+  forHtml(str: string[]){
+    let s = "";
+    str.map(m => {
+      s += m+"<br>";
+    });
+    return s.slice(0, -4);
   }
 }
