@@ -6,7 +6,7 @@
   <ons-list>
     <!-- 上段エリア -->
     <ons-list-item style="width: 100%;">
-      <ons-button class="btn" (click)="goToMenu(navi)">
+      <ons-button class="btn" (click)="goToMenu()">
         <i class="material-icons">home</i>
       </ons-button>
       {{location.Address}}
@@ -38,7 +38,7 @@
     <ons-list-item>
       <div align="center" style="width: 100%;">
         <div *ngIf="photoInfo" class="item title">{{photoInfo.Year}} 年</div>
-        <div class="item title">{{location.Title}}</div>
+        <div *ngIf="false" class="item title">{{location.Title}}</div>
         <div class="item" style="margin-top: 50px;">{{photoInfo.Comment}}</div>
         <div class="item">
           <ons-button (click)="goToUpload()" class="btn"><i class="material-icons">edit</i></ons-button>

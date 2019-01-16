@@ -8,21 +8,21 @@
     <br>
     Photo Gallery
   </div>
-  <div id="message">{{msg}}</div>
+  <div *ngIf="false" id="message">{{msg}}</div>
   <div style="text-align: center; margin: 10px">
-    <ons-button (click)="goToTimeTrip(navi)" class="menu_btn_Time_Trip">
+    <ons-button (click)="goToTimeTrip()" class="menu_btn_Time_Trip">
       <i class="material-icons">restore</i><br>Time Trip
     </ons-button>
     <br>
-    <ons-button (click)="goToRegistrationList(navi)" class="menu_btn_Registrations">
+    <ons-button (click)="goToRegistrationList()" class="menu_btn_Registrations">
       <i class="material-icons">view_list</i><br>Registrations
     </ons-button>
     <br>
-    <ons-button (click)="goToMap(navi)"  class="menu_btn_map">
+    <ons-button (click)="goToMap()"  class="menu_btn_map">
         <i class="material-icons">place</i><br>Map
     </ons-button>
     <br>
-    <ons-button (click)="goToUpload(navi)" class="menu_btn_Upload" *ngIf="1==2">
+    <ons-button (click)="goToUpload()" class="menu_btn_Upload" *ngIf="false">
       <i class="material-icons">arrow_upward</i><br>Upload
     </ons-button>
   </div>
