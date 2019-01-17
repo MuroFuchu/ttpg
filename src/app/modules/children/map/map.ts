@@ -5,6 +5,7 @@ import {OnsNavigator,OnsenModule,Params} from 'ngx-onsenui' ;
 import {Component, NgZone, Injectable, OnInit, EventEmitter} from '@angular/core';
 import {MapsAPILoader,GoogleMapsAPIWrapper, MouseEvent, AgmMap, AgmMarker, AgmInfoWindow } from '@agm/core';
 import {IndexedDbService} from '../../../services/IndexedDbService';//ﾃﾞｭｸｼ
+import {HttpService} from '../../../services/HttpService';//HTTPｻｰﾋﾞｽ
 import {GoogleMapsAPIWrapperEx} from '../../../services/GoogleMapsAPIWrapperEx';//ｸﾞｰｸﾞﾙ
 
 @Component({
@@ -48,7 +49,7 @@ export class Map implements OnInit {
   iconPathRegist: string = './assets/contents/buttons/goToRegist.png';
   iconPathRegist2: string = 'src/';
   addressList:any[];
-  constructor(private _navigator: OnsNavigator, private _indexedDbService: IndexedDbService, private _googleMapsAPIWrapperEx: GoogleMapsAPIWrapperEx, private _params: Params) {}
+  constructor(private _navigator: OnsNavigator, private _indexedDbService:IndexedDbService, private _httpService: HttpService, private _googleMapsAPIWrapperEx: GoogleMapsAPIWrapperEx, private _params: Params) {}
 
   async ngOnInit() {
     this.presentLat = this._params.data.PresentLat;
@@ -170,7 +171,8 @@ export class Map implements OnInit {
     if(this.txtTitle == ''){
       this.alertNonInputTxt();
     }else{
-      this._indexedDbService.createMstImg(this.createObj(lat, lng, this.txtTitle, this.address));    
+      var ret = await this._httpService.AddLocation(this.txtTitle, this.address, lat, lng).toPromise();
+      // this._indexedDbService.createMstImg(this.createObj(lat, lng, this.txtTitle, this.address));    
       this.changeCenter(lat,lng);
       await this.getMapData(lat,lng);
       this.displayPin();
