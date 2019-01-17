@@ -80,6 +80,10 @@ export class IndexedDbService {
         this.dexieService.deleteDataBase();
     }
 
+    public deleteTrnPhotoInfoMutiple(keys: number[]) {
+        this.dexieService.deleteMultiple(this.TrnPhotoInfo, keys);
+    }
+
     // 画像をマスタ登録する
     public createMstImg(locationInfoObjects: Object){
         this.dexieService.addOne(this.MstLocationInfo, locationInfoObjects);       
