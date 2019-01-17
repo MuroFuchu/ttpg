@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IndexedDbService } from '../../../services/IndexedDbService';
+import { HttpService } from 'src/app/services/HttpService';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import { TimeTrip } from '../timeTrip/timeTrip';
 import { Menu } from '../menu/menu';
@@ -21,7 +21,7 @@ export class Upload {
   photoComment: string = '';
   inputAccept: string = '';
 
-  constructor(private _navigator: OnsNavigator, private _indexedDbService: IndexedDbService, private _params: Params) {}
+  constructor(private _navigator: OnsNavigator, private _httpService: HttpService, private _params: Params) {}
 
   async ngOnInit() {
 
@@ -102,11 +102,11 @@ export class Upload {
       photoInfo.Comment = this.photoComment;
       photoInfo.Bin = imgElem.src;
 
-      var result = await this._indexedDbService.addOnePhotoInfo(photoInfo);
-      this.photoID = Number(result);
+      var photo = await this._httpService.AddPhoto(Number(this.photoYear), Number(this.photoLocationID), this.photoComment, imgElem.src).toPromise();
+      this.photoID = photo.photoID;
 
-      console.log(this.photoID)
-
+      console.log('AddPhoto' + this.photoID)
+ 
       ons.notification.alert({
         title: 'ありがとう！',
         message: '素敵な写真ですね！',

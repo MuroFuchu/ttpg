@@ -67,11 +67,10 @@ export class HttpService {
             .append("Year", String(year))
             .append("LocationID", String(locationID))
             .append("Comment", comment)
-            .append("Bin", bin);
+            .append("Bin", encodeURIComponent(bin));
 
         return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params);
     }    
-
 }
 
 //#region 型定義情報
