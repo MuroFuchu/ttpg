@@ -1,0 +1,32 @@
+
+<ons-toolbar>
+  <div class="center" (click)="goToMenu()">Menu</div>
+</ons-toolbar>
+<div class="content">
+  <div class="menu_title">
+    Http Request Test
+  </div>
+  <div style="text-align: center; margin: 10px">
+    <ons-input placeholder="引数１" [(value)]="arg1"></ons-input>
+    <ons-input placeholder="引数２" [(value)]="arg2"></ons-input>
+    <ons-input placeholder="引数３" [(value)]="arg3"></ons-input>
+    <ons-input placeholder="引数４" [(value)]="arg4"></ons-input>
+  </div>
+  <div style="text-align: center; margin: 10px">
+    <ons-button (click)="goGetLocation()" class="menu_btn_Time_Trip">
+      <i class="material-icons">location_on</i><br>GetLocation
+    </ons-button>
+    <br>
+    <ons-button (click)="goAddLocation()" class="menu_btn_Registrations">
+      <i class="material-icons">add_location</i><br>AddLocation
+    </ons-button>
+    <br>
+    <ons-button (click)="goGetPhoto()"  class="menu_btn_map">
+        <i class="material-icons">photo</i><br>GetPhoto
+    </ons-button>
+    <br>
+    <ons-button (click)="goAddPhoto()" class="menu_btn_Upload">
+      <i class="material-icons">add_photo_alternate</i><br>AddPhoto
+    </ons-button>
+  </div>
+</div>

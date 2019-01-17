@@ -19,13 +19,15 @@ import { Map } from './modules/children/map/map';
 import { RegistrationList } from './modules/children/registrationList/registrationList';
 import { Upload } from './modules/children/upload/upload';
 import { TimeTrip } from './modules/children/timeTrip/timeTrip';
+import { httpTest } from './modules/children/httpTest/httpTest';
 
 // Service
 import { IndexedDbService } from './services/IndexedDbService';
 import { DexieServiceEx } from './services/DexieServiceEx';
 import { GetJsonService } from './services/GetJsonService';
 import { GoogleMapsAPIWrapperEx } from './services/GoogleMapsAPIWrapperEx';
-import {DexieModule,DexieConfig} from './services/ngx-dexie';
+import { DexieModule, DexieConfig } from './services/ngx-dexie';
+import { HttpService } from "./services/HttpService";
  
 const config: DexieConfig = {
   databaseName: 'TimeTripPhotoGallery',//your database name here
@@ -56,6 +58,7 @@ const config: DexieConfig = {
     RegistrationList,
     Upload,
     TimeTrip,
+    httpTest,
   ],
   entryComponents: [
     Menu,
@@ -63,12 +66,14 @@ const config: DexieConfig = {
     RegistrationList,
     Upload,
     TimeTrip,
+    httpTest,
   ],
   providers: [
     IndexedDbService,
     DexieServiceEx,
     GetJsonService,
     GoogleMapsAPIWrapperEx,
+    HttpService,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
