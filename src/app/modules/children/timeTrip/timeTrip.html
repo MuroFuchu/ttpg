@@ -19,7 +19,7 @@
 
     <!-- 写真エリア -->
     <ons-list-item style="width: 100%;">
-      <div (click)="prev()" style="z-index: 100;" style="width: 35px;">
+      <div (click)="prev()" style="z-index: 100;" style="width: 30px;">
         <i [style.display]="!isPrev() ? 'none' : 'block'" class="material-icons">arrow_back</i>
       </div>
       <ons-carousel #carousel swipeable auto-scroll centered id="carousel"
@@ -29,7 +29,7 @@
           <div *ngIf="isImgErrList[i]" class="carousel_erricon"><i class="material-icons">cancel</i></div>
         </ons-carousel-item>
       </ons-carousel>
-      <div (click)="next()" style="z-index: 100;" style="width: 35px;">
+      <div (click)="next()" style="z-index: 100;" style="width: 30px;">
         <i [style.display]="!isNext() ? 'none' : 'block'" class="material-icons">arrow_forward</i>
       </div>
     </ons-list-item>
