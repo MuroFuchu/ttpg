@@ -11,7 +11,7 @@ import {HttpService, StatusCd, PhotoModel} from '../../../services/HttpService';
 @Component({
   selector: "ons-page[title='registrationList']",
   templateUrl: './registrationList.html',
-  styleUrls: ['./registrationList.html']
+  styleUrls: ['./registrationList.css']
 })
 export class RegistrationList {
   RegistrationLists: RegistrationInfo[] = [];
@@ -72,7 +72,7 @@ export class RegistrationList {
           LocationID: l.locationID,
           Title: l.title,
           Comment: p.comment,
-          Bin: p.bin
+          Bin: decodeURIComponent(p.bin)//p.bin.replace(/\s+/g, "")
         });
 
         // localDBに登録
