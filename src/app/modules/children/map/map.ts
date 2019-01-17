@@ -28,6 +28,7 @@ export class Map implements OnInit {
   apiWrapper:GoogleMapsAPIWrapper;
   map;
   lastOpenWindow;
+  createWindow = null;
   txtTitle: string = '';
   selectedAddresses: string = '';// 住所を選択した値が入る
   selectedMarkerPin: string;
@@ -125,7 +126,9 @@ export class Map implements OnInit {
     console.log('選択した住所→' + this.selectedAddresses.toString());
   }
   //選択したマーカーの情報を取得する
-  clickMarker(m: marker){
+  clickMarker(m: marker, selectedInfoWindow){
+    selectedInfoWindow.close();
+    this.lastOpenWindow = selectedInfoWindow;
     this.locationID = m.LocationID;
     this.address = m.Address;
     this.resetPinMarker();//ピンマーカーをすべて初期化する
@@ -161,7 +164,7 @@ export class Map implements OnInit {
     }
   }
   // 地点登録
-  async registMapMst(lat:number, lng:number){
+  async registMapMst(lat:number, lng:number, infoWindow){
     var address;
     address = this._googleMapsAPIWrapperEx.getAddress(lat, lng);
     if(this.txtTitle == ''){
@@ -171,6 +174,7 @@ export class Map implements OnInit {
       this.changeCenter(lat,lng);
       await this.getMapData(lat,lng);
       this.displayPin();
+      infoWindow.close();
     }
   }
   // 地点登録DBオブジェクト生成
@@ -207,7 +211,7 @@ export class Map implements OnInit {
   alertNonSelectPin() {
     ons.notification.alert({ message: '閲覧したいピンを選択すると、その地点の情報を確認できます', title:'ピンを選びましょう！' });
   }
-  // ピン未選択
+  // 地点名未入力
   alertNonInputTxt() {
     ons.notification.alert({ message: 'この地点の名前を入力すると、この地点', title:'地点の名前を入力しましょう！' });
   }
