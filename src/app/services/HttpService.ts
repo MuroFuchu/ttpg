@@ -31,14 +31,15 @@ export class HttpService {
      * @param latitude ピンを立てた位置の緯度。
      * @param longitude ピンを立てた位置の経度
      */
-    AddLocation(title: string, address: string, latitude: number, longitude: number): Observable<AddLocationResponseModel> {
+    AddLocation(title: string, address: string, latitude: number, longitude: number): Observable<any> {
         let params = new HttpParams()
         .append("Title", title)
         .append("Address", address)
         .append("Latitude", String(latitude))
         .append("Longitude", String(longitude));
 
-        return this.http.put<AddLocationResponseModel>(`${this.webApiEndPoint}/AddLocation`, { params: params });
+        //return this.http.put<AddLocationResponseModel>(`${this.webApiEndPoint}/AddLocation`, params);
+        return this.http.put<any>(`${this.webApiEndPoint}/AddLocation`, params);
     }
 
     /**
@@ -68,7 +69,7 @@ export class HttpService {
             .append("Comment", comment)
             .append("Bin", bin);
 
-        return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, { params: params });
+        return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params);
     }    
 
 }
@@ -160,7 +161,7 @@ export class GetLocationResponseModel extends HttpResponseModel {
  * AddLocationの応答パラメータモデル。
  */
 export class AddLocationResponseModel extends HttpResponseModel {
-    locationId: number;
+    locationID: number;
 }
 
 /**
@@ -174,7 +175,7 @@ export class GetPhotoResponseModel extends HttpResponseModel {
  * AddPhotoの応答パラメータモデル。
  */
 export class AddPhotoResponseModel extends HttpResponseModel {
-    photoId: number;
+    photoID: number;
 }
 
 //#endregion
