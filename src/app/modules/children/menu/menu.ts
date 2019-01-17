@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import * as ons from 'onsenui';
 import {OnsNavigator,OnsenModule} from 'ngx-onsenui' 
 
@@ -16,7 +16,15 @@ import {IndexedDbService} from '../../../services/IndexedDbService';//ﾃﾞｭ�
   styleUrls: ['./menu.css']
 })
 export class Menu {
+  presentLat: number;
+  presentLng: number;
+
   constructor(private _navigator: OnsNavigator , private _indexedDbService: IndexedDbService) {}
+
+  @HostListener('show')
+  show(e) {
+    this.getGeo();
+  }
 
   deleteDataBase() {
     ons.notification.confirm({
@@ -29,6 +37,10 @@ export class Menu {
         }
       }
     });
+    
+  }
+
+  ngOnInit(){
     
   }
 
@@ -46,14 +58,36 @@ export class Menu {
   }
 
   goToMap() {
-    this._navigator.nativeElement.pushPage(Map, {data: {hoge: "fuga"}});
+    this._navigator.nativeElement.pushPage(Map, {data: { "PresentLat": this.presentLat, "PresentLng": this.presentLng }});
   }
 
   goToRegistrationList() {
-    this._navigator.nativeElement.pushPage(RegistrationList, {data: {hoge: "fuga"}});
+    this._navigator.nativeElement.pushPage(RegistrationList, {data: { "PresentLat": this.presentLat, "PresentLng": this.presentLng }});
   }
 
   goToUpload() {
     this._navigator.nativeElement.pushPage(Upload, {data: {hoge: "fuga"}});
+  }
+
+  // 現在地を取得する
+  async getGeo() {
+    var option = { timeout: 6000 }; //タイムアウト値(ミリ秒)
+    var comp = this;
+    navigator.geolocation.getCurrentPosition(
+      function(position){
+        comp.presentLat = position.coords.latitude;
+        comp.presentLng = position.coords.longitude;
+        console.log("Get Geo OK.");
+      },
+      function(){
+        comp.presentLat = null;
+        comp.presentLng = null;
+        console.error("Get Geo NG.");
+        // ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
+        // }});
+      },
+      option
+    );
+
   }
 }

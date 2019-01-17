@@ -1,7 +1,7 @@
 import * as ons from 'onsenui';
 import {Upload} from '../upload/upload';
 import {TimeTrip} from '../timeTrip/timeTrip';
-import {OnsNavigator,OnsenModule} from 'ngx-onsenui' ;
+import {OnsNavigator,OnsenModule,Params} from 'ngx-onsenui' ;
 import {Component, NgZone, Injectable, OnInit, EventEmitter} from '@angular/core';
 import {MapsAPILoader,GoogleMapsAPIWrapper, MouseEvent, AgmMap, AgmMarker, AgmInfoWindow } from '@agm/core';
 import {IndexedDbService} from '../../../services/IndexedDbService';//ﾃﾞｭｸｼ
@@ -47,10 +47,24 @@ export class Map implements OnInit {
   iconPathRegist: string = './assets/contents/buttons/goToRegist.png';
   iconPathRegist2: string = 'src/';
   addressList:any[];
-  constructor(private _navigator: OnsNavigator, private _indexedDbService: IndexedDbService, private _googleMapsAPIWrapperEx: GoogleMapsAPIWrapperEx) {}
+  constructor(private _navigator: OnsNavigator, private _indexedDbService: IndexedDbService, private _googleMapsAPIWrapperEx: GoogleMapsAPIWrapperEx, private _params: Params) {}
 
   async ngOnInit() {
-    this.getGeo();
+    this.presentLat = this._params.data.PresentLat;
+    this.presentLng = this._params.data.PresentLng;
+    var comp = this;
+
+    if(this.presentLat != null || this.presentLng != null){
+      this.changeCenter(comp.presentLat,comp.presentLng);
+      this.getMapData(comp.centerLat,comp.centerLng);
+      this.displayPin();
+    }else{
+      ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
+        comp.changeCenter(comp.presentLat,comp.presentLng);
+        comp.getMapData(comp.centerLat,comp.centerLng);
+        comp.displayPin();
+      }});
+    }
   }
 
   // 現在地を取得する
@@ -84,7 +98,7 @@ export class Map implements OnInit {
       option
     );
     
-  }
+  }  
 
   // 画面にピンを表示する
   displayPin(){

@@ -19,7 +19,7 @@ export class HttpService {
         let params = new HttpParams()
             .append("Latitude", String(latitude))
             .append("Longitude", String(longitude))
-            .append("Zoom", String(zoom));
+            .append("Zoom", zoom != null ? String(zoom) : "");
 
         return this.http.get<GetLocationResponseModel>(`${this.webApiEndPoint}/GetLocation`, { params: params });
     }
@@ -50,7 +50,7 @@ export class HttpService {
     GetPhoto(locationID: number, photoID: number): Observable<GetPhotoResponseModel> {
         let params = new HttpParams()
             .append("LocationID", String(locationID))
-            .append("PhotoID", String(photoID));
+            .append("PhotoID", photoID != null ? String(photoID) : "");
 
         return this.http.get<GetPhotoResponseModel>(`${this.webApiEndPoint}/GetPhoto`, { params: params });
     }
@@ -67,11 +67,10 @@ export class HttpService {
             .append("Year", String(year))
             .append("LocationID", String(locationID))
             .append("Comment", comment)
-            .append("Bin", bin);
+            .append("Bin", encodeURIComponent(bin));
 
         return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params);
     }    
-
 }
 
 //#region 型定義情報
@@ -124,6 +123,10 @@ export class LocationModel {
  * TimeTripPhotoGalleryで使用する形式に加工した写真情報。
  */
 export class PhotoModel {
+    /**
+     * 写真情報を特定するためのキー。
+     */
+    photoID: number;    
     /**
      * 写真の年。
      */
