@@ -62,7 +62,7 @@ export class Menu {
   }
 
   goToRegistrationList() {
-    this._navigator.nativeElement.pushPage(RegistrationList, {data: {hoge: "fuga"}});
+    this._navigator.nativeElement.pushPage(RegistrationList, {data: { "PresentLat": this.presentLat, "PresentLng": this.presentLng }});
   }
 
   goToUpload() {
