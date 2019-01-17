@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { extend } from 'webdriver-js-extender';
 
@@ -20,6 +20,7 @@ export class HttpService {
             .append("Latitude", String(latitude))
             .append("Longitude", String(longitude))
             .append("Zoom", zoom != null ? String(zoom) : "");
+        // let headers = new HttpHeaders().set('Authorization', `Bearer ${''}`);
 
         return this.http.get<GetLocationResponseModel>(`${this.webApiEndPoint}/GetLocation`, { params: params });
     }
@@ -68,8 +69,9 @@ export class HttpService {
             .append("LocationID", String(locationID))
             .append("Comment", comment)
             .append("Bin", encodeURIComponent(bin));
+        let headers = new HttpHeaders().set('Authorization', `Bearer ${''}`);
 
-        return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params);
+        return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params, {headers: headers});
     }    
 }
 
