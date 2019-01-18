@@ -181,7 +181,7 @@ export class TimeTrip {
   // 写真情報設定
   private async setPhotoInfo(locationID: number, photoID: number){
     // 時系列写真情報リスト取得
-    console.log(await this._indexedDbService.getTrnPhotoInfo());
+    //console.log(await this._indexedDbService.getTrnPhotoInfo());
     this.photoInfoAllList = await this._indexedDbService.getTrnPhotoInfo();
 
     // timeTrip情報を設定

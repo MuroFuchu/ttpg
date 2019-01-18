@@ -13,6 +13,8 @@ export class ReduceImageSizeService {
     reduceImageSize(target: File, size: number): Promise<FileInfo> {
         var info = this.ConvertFileInfo(target);
 
+        var comp = this;
+
         const p1 = new Promise<FileInfo>((resolve, reject) => {
             // 画像ファイル以外は処理中止
             if (!target.type || target.type.trim() == '' || !target.type.match(/^image\/.*$/)) {
@@ -68,7 +70,7 @@ export class ReduceImageSizeService {
 
                         resolve(info);
                     }
-                    image.src = reader.result;
+                    image.src = comp.buffer_to_string(reader.result);
                 }
                 reader.readAsDataURL(target);
             }
@@ -96,8 +98,9 @@ export class ReduceImageSizeService {
             
         var reader = new FileReader();
 
+        var comp = this;
         reader.onloadend = function () {
-            ret.fileDataUrl = reader.result;
+            ret.fileDataUrl = comp.buffer_to_string(reader.result);
             ret.fileName = target.name;
             ret.fileSize = target.size;
             ret.fileType = target.type;
@@ -113,7 +116,7 @@ export class ReduceImageSizeService {
         var fr = new FileReader()
         var pr = new Promise<string>((resolve, reject) => {
             fr.onload = eve => {
-                resolve(fr.result)
+                resolve(this.buffer_to_string(fr.result))
             }
             fr.onerror = eve => {
                 reject(fr.error)
@@ -122,6 +125,9 @@ export class ReduceImageSizeService {
 
         fr.readAsDataURL(blob)
         return pr
+    }
+    buffer_to_string(buf) {
+        return String.fromCharCode.apply("", new Uint16Array(buf))
     }
 }
 
