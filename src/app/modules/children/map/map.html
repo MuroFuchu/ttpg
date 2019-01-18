@@ -63,12 +63,15 @@
     <agm-info-window>
       <table>
         <tr>
-          <td>名称：</td>
-          <td>{{m.Title}}</td>
+          <td class="w-30">名称：</td>
+          <td class="w-70">{{m.Title}}</td>
         </tr>
         <tr>
-            <td>住所：</td>
-            <td>{{m.Address}}</td>
+          <td>住所：</td>
+          <td>{{m.Address}}</td>
+        </tr>
+        <tr>
+          <td colspan="2"><ons-button (click)="sendToTweet(m.Title)" modifier="large" class="btn_regist_point">ツイートする</ons-button></td>
         </tr>
       </table>
     </agm-info-window>
@@ -92,7 +95,7 @@
     </agm-marker>
 </agm-map>
 <div class="btn_area">
-  <ons-button (click)="showInfo()" class="btn_icon_style btn_icon_style_left"><img [src]="iconPathInfo" alt="情報表示"></ons-button>
+  <ons-button (click)="showInfo()" class="btn_icon_style btn_icon_style_center"><img [src]="iconPathInfo" alt="情報表示"></ons-button>
   <ons-button (click)="goToTimeTrip()" class="btn_icon_style btn_icon_style_center"><img [src]="iconPathTrip" alt="TimeTrip画面へ"></ons-button>
-  <ons-button (click)="goToUpload()" class="btn_icon_style btn_icon_style_right"><img [src]="iconPathRegist" alt="画像アップロード画面へ"></ons-button>
+  <ons-button (click)="goToUpload()" class="btn_icon_style btn_icon_style_center"><img [src]="iconPathRegist" alt="画像アップロード画面へ"></ons-button>
 </div>

@@ -151,6 +151,7 @@ export class Map implements OnInit {
     var res = await this._httpService.GetLocation(lat, lng, null);
     if(res.statusCd == StatusCd.success){
       console.log('データ取得完了');
+      console.log('データの長さ：' + res.locations.length);
       for(let data of res.locations){
         this.markers.push({ 
             LocationID:data.locationID,
@@ -177,7 +178,7 @@ export class Map implements OnInit {
     if(this.txtTitle == ''){
       this.alertNonInputTxt();
     }else{
-      var ret = await this._httpService.AddLocation(this.txtTitle, this.address, lat, lng);
+      var ret = await this._httpService.AddLocation(this.txtTitle, this.selectedAddresses, lat, lng);
       // if(ret.statusCd == StatusCd.success){
       //   this._indexedDbService.createMstImg(this.createObj(ret.locationID, lat, lng, this.txtTitle, this.address));    
       // }
@@ -256,6 +257,16 @@ export class Map implements OnInit {
   }
   // #endregion
   // #endregion
+
+  // Twitterに投稿する
+  sendToTweet(Title: string){
+    console.log("Twitterに投稿するボタンを押下");
+    var base_url = 'https://twitter.com/intent/tweet'; 
+    var text = Title + 'についてツイートしています ';//ツイート本文
+    var hashtags = 'TimeTripPhotoGallary'
+    var tweetLink = base_url + '?text=' + encodeURIComponent(text) + '&hashtags=' + hashtags + '&target=_blank';
+    window.open(encodeURI(decodeURI(tweetLink)), 'この地点についてツイートする');
+  }
 }
 
 // #region ◆インタフェース◆
