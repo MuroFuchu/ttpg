@@ -8,11 +8,12 @@
   <!-- 位置 -->
   <ons-list>
     <ons-list-item style="width: 100%;">
-      <ons-button class="btn" style="background:transparent; color: black; box-shadow: none" (click)="goToHome()">
-        <i class="material-icons">home</i>
+      <ons-button class="btn" style="background:transparent; color: black; box-shadow: none;" (click)="goToHome()">
+        <i style="font-size: 30px" class="material-icons">home</i>
       </ons-button>
       {{ photoAddress }}
     </ons-list-item>
+  </ons-list>
 
     <!-- 写真 -->
     <div id="previewArea">
@@ -20,6 +21,7 @@
       <!-- <amp-img #photoPreview [src]="binary" id="photoPreview" height="300" width="300" layout="responsive" style="width: 100%; height: auto; text-align: center"></amp-img> -->
     </div>
 
+  <ons-list>
     <!-- 写真の情報 -->
     <!-- 年 -->
     <ons-list-header>いつの写真？</ons-list-header>
@@ -38,12 +40,12 @@
 
     <!-- 写真をアップロード -->
     <ons-button id="uploadBtn" class="btn" style="background:transparent; color: black; box-shadow: none" (click)="uploadPhotoConfirm();">
-      <label class="material-icons">cloud_upload</label>
+      <label style="font-size: 30px" class="material-icons">cloud_upload</label>
     </ons-button>
 
     <!-- 写真を開く -->
     <ons-button id="openBtn" class="btn" style="background:transparent; color: black; box-shadow: none" for="openPhoto">
-      <label class="material-icons">
+      <label style="font-size: 30px" class="material-icons">
         insert_photo
         <input id="openPhoto" style="display: none" type="file" (change)="changePhoto($event)" [accept]="inputAccept">
       </label>

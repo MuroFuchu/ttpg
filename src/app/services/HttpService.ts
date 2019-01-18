@@ -8,7 +8,9 @@ import { CommaExpr } from '@angular/compiler';
 
 @Injectable()
 export class HttpService {
-    private webApiEndPoint = "http://172.16.0.50/TimeTripPhotoGallery.Web/api";
+
+     private webApiEndPoint = "http://172.16.0.50/TimeTripPhotoGallery.Web/api";
+    // private webApiEndPoint = "http://test01.nisco.ne.jp/TimeTripPhotoGallery.Web/api";
 
     constructor(private http: HttpClient, private _indexedDbService: IndexedDbService) {}
 

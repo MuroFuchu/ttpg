@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="jp.ne.nisco.www.ttpg.local" version="1.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="jp.ne.nisco.www.ttpg" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>TimeTripPhotoGallery</name>
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team
@@ -96,10 +96,20 @@
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
         </config-file>
     </platform>
+    <platform name="ios">
+        <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+        <string>for QR Code reading</string>
+        </config-file>
+        <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+        <string>for QR Code reading</string>
+        </config-file>
+    </platform>
     <engine name="android" spec="7.1.4" />
+    <engine name="ios" spec="^4.5.5" />
     <plugin name="cordova-plugin-geolocation" spec="4.0.1" />
     <plugin name="cordova-custom-config" spec="5.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.1" />
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="cordova-plugin-android-permissions" spec="1.0.0" />
+    <plugin name="cordova-plugin-settings-hook" spec="0.2.7" />
 </widget>
