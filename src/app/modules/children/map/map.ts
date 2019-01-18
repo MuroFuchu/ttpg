@@ -257,7 +257,7 @@ export class Map implements OnInit {
     console.log("Twitterに投稿するボタンを押下");
     var base_url = 'https://twitter.com/intent/tweet'; 
     var text = Title + 'についてツイートしています ';//ツイート本文
-    var hashtags = 'TimeTripPhotoGallary'
+    var hashtags = 'TimeTripPhotoGallery'
     var tweetLink = base_url + '?text=' + encodeURIComponent(text) + '&hashtags=' + hashtags + '&target=_blank';
     window.open(encodeURI(decodeURI(tweetLink)), 'この地点についてツイートする');
   }
