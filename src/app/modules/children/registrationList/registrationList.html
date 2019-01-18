@@ -3,15 +3,18 @@
   <div class="center">写真一覧から探す</div>
 </ons-toolbar>
 <div class="content">
-  <ons-list *ngIf="isVisible">
-    <ons-list-item modifier="chevron" tappable *ngFor="let Registration of RegistrationLists" [value]="Registration.Title" (click)="clickPhoto(Registration.LocationID,Registration.PhotoID)">
-      <div>
-          <img [src]="sanitize(Registration.Bin)" [alt]="Registration.Title" class="dataPicArea">
-      </div>
-      <br>
-      <div>
-        <p class="dataMemoArea-text">{{ Registration.Comment }}</p>
-      </div>
-    </ons-list-item>
-  </ons-list>
+  <div *ngIf="isVisible">
+      <ons-list>
+          <ons-list-item modifier="chevron" tappable *ngFor="let Registration of RegistrationLists" [value]="Registration.Title" (click)="clickPhoto(Registration.LocationID,Registration.PhotoID)">
+            <div>
+                <img [src]="sanitize(Registration.Bin)" [alt]="Registration.Title" class="dataPicArea">
+            </div>
+            <br>
+            <div>
+              <p class="dataMemoArea-text">{{ Registration.Comment }}</p>
+            </div>
+          </ons-list-item>
+        </ons-list>
+  </div>
+
 </div>

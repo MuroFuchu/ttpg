@@ -37,9 +37,9 @@
     <!-- 情報エリア -->
     <ons-list-item>
       <div align="center" style="width: 100%;">
-        <div *ngIf="photoInfo" class="item title">{{photoInfo.Year}} 年</div>
-        <div *ngIf="false" class="item title">{{location.Title}}</div>
-        <div class="item" style="margin-top: 50px;">{{photoInfo.Comment}}</div>
+        <div *ngIf="photoInfo && photoInfo.Year" class="item title">{{photoInfo.Year}} 年</div>
+        <div *ngIf="false" class="item title">{{location.Title}}</div><!--廃止-->
+        <div class="item" style="margin-top: 50px;">{{photoInfo?.Comment}}</div>
         <div class="item">
           <ons-button (click)="goToUpload()" class="btn"><i class="material-icons">edit</i></ons-button>
         </div>
@@ -49,7 +49,7 @@
 </div>
 
 <!-- 画像拡大モーダル -->
-<ons-modal #modal (click)="modal.hide()">
+<ons-modal #modal (click)="modal.hide()" *ngIf="photoInfo?.Bin">
   <div class="photoModal">
     <img class="carousel_photo" [src]="photoInfo.Bin">
   </div>

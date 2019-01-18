@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpService } from 'src/app/services/HttpService';
+import { ReduceImageSizeService } from 'src/app/services/ReduceImageSizeService';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import { TimeTrip } from '../timeTrip/timeTrip';
 import { Menu } from '../menu/menu';
@@ -21,7 +22,9 @@ export class Upload {
   photoComment: string = '';
   inputAccept: string = '';
 
-  constructor(private _navigator: OnsNavigator, private _httpService: HttpService, private _params: Params) {}
+  binary;
+
+  constructor(private _navigator: OnsNavigator, private _httpService: HttpService, private _params: Params, private _reduceImageSizeService: ReduceImageSizeService) {}
 
   async ngOnInit() {
 
@@ -39,24 +42,39 @@ export class Upload {
 
   //#region 公開処理
 
-
   // ファイル選択ボタン
-  public changePhoto(event)
+  public async changePhoto(event)
   {
+    let size = 50000;
     let files: File[] = event.target.files;
     let file: File = files[0];
 
-    var fileReader = new FileReader();
-    fileReader.onload = function() {
-
-      var imgElem: HTMLImageElement = document.getElementById('photoPreview') as HTMLImageElement;
-      var b64 = btoa(fileReader.result.toString());
-      imgElem.src = "data:image/jpeg;base64," + b64;
-
+    var imgElem: HTMLImageElement = document.getElementById('photoPreview') as HTMLImageElement;
+    if (file.size != null && file.size > size) {
+      console.log("changePhotoStart --reduce");
+      let fileInfo = await this._reduceImageSizeService.reduceImageSize(file, size);
+      imgElem.src = fileInfo.fileDataUrl;
+      console.log("fileInfoEnd --reduce");
+    }else{
+      console.log("changePhotoStart --normal");
+      imgElem.src = await this._reduceImageSizeService.readDataUrl(file);
+      console.log("fileInfoEnd --normal");
     }
 
-    fileReader.readAsBinaryString(file);
+    // var fileReader = new FileReader();
+    // fileReader.onload = function() {
+    //   console.log("3.画像ロードStart");
+    //   var imgElem: HTMLImageElement = document.getElementById('photoPreview') as HTMLImageElement;
+    //   // var a = new Uint8Array(fileReader.result);
+    //   // imgElem.src = "data:image/jpeg;base64," + a;
+    //   var b64 = btoa(fileReader.result.toString());
+    //   imgElem.src = "data:image/jpeg;base64," + b64;
+    //   console.log("4.画像ロードOK");
+    // }
 
+    // console.log("2.readBinaryStart");
+    // fileReader.readAsBinaryString(file);
+    // //fileReader.readAsArrayBuffer(file);
   }
 
   // 写真アップロード
@@ -102,7 +120,7 @@ export class Upload {
       photoInfo.Comment = this.photoComment;
       photoInfo.Bin = imgElem.src;
 
-      var photo = await this._httpService.AddPhoto(Number(this.photoYear), Number(this.photoLocationID), this.photoComment, imgElem.src).toPromise();
+      var photo = await this._httpService.AddPhoto(Number(this.photoYear), Number(this.photoLocationID), this.photoComment, imgElem.src);
       this.photoID = photo.photoID;
 
       console.log('AddPhoto' + this.photoID)

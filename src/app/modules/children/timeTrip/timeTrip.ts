@@ -14,7 +14,7 @@ import {
 } from 'ngx-onsenui';
 
 import { IndexedDbService } from '../../../services/IndexedDbService';
-import { HttpService } from '../../../services/HttpService';
+import { LocalLocationInfo, LocalPhotoInfo } from '../../../services/HttpService';
 
 @Component({
   selector: "ons-page[title='timeTrip']",
@@ -26,13 +26,13 @@ export class TimeTrip {
   @ViewChild('carousel') carousel: ElementRef;
   @ViewChild('modal') modal: ElementRef;
  
-  photoInfo: TimeTripPhotoInfo = new TimeTripPhotoInfo();
+  photoInfo: LocalPhotoInfo = new LocalPhotoInfo();
 
   isImgErrList: boolean[] = [];
-  locationInfoList: LocationInfo[] = [];
-  photoInfoAllList: TimeTripPhotoInfo[] = [];
-  photoInfoList: TimeTripPhotoInfo[] = [];
-  location: LocationInfo = new LocationInfo();
+  locationInfoList: LocalLocationInfo[] = [];
+  photoInfoAllList: LocalPhotoInfo[] = [];
+  photoInfoList: LocalPhotoInfo[] = [];
+  location: LocalLocationInfo = new LocalLocationInfo();
   baseDistance: number = 0;
   activeIndex: number = 0;
 
@@ -41,11 +41,11 @@ export class TimeTrip {
 
   isConstructor: boolean = false;
 
+  isVisible = false;
   params = null;
 
   constructor(private _navigator: OnsNavigator, 
     private _indexedDbService: IndexedDbService, 
-    private _httpService: HttpService,
     private _params: Params) {
       
     this.isConstructor = true;
@@ -72,6 +72,8 @@ export class TimeTrip {
   }
 
   async init() {
+    this.isVisible = false;
+
     // 引数を取得
     // console.log(this.params);
     var locationId = this.params.LocationID;
@@ -81,28 +83,23 @@ export class TimeTrip {
     this.check = true;
 
     // 位置情報リスト取得
+    console.log(await this._indexedDbService.getMstLocationInfo());
     this.locationInfoList = await this._indexedDbService.getMstLocationInfo();
     if(this.locationInfoList){
       this.location = this.locationInfoList.find(f => f.LocationID == locationId);
+      this.isVisible = !this.location ? false : true;
     }
 
     // 写真情報取得
     await this.setPhotoInfo(locationId, this.photoId);
 
-    // onsUI読み込み完了後処理
-    // ons.ready(() => {
-    //   // カルーセルの初期設定
-    //   // comp.initCrousel(comp, photoId);
-    //   var index = this.photoInfoList.findIndex(s => s.PhotoID == this.photoId);
-    //   var activeIndex = index == -1 ? 0 : index;
-    //   console.log(activeIndex);
-    //   this.carousel.nativeElement.setActiveIndex(activeIndex);
-    //   this.carousel.nativeElement.refresh();
-    // });
-
     // 読み込めなかった写真リスト初期化
     var array = new Array(this.photoInfoList.length);
     this.isImgErrList = this.isImgErrList.fill(false, 0, array.length);
+
+    if(this.photoInfoList.length == 0){
+      ons.notification.toast('写真がありません！', { timeout: 1500, animation: 'fall' });
+    }
 
     // var comp = this;
     // this.modal.nativeElement.on("pinchin", (event) => {
@@ -184,6 +181,7 @@ export class TimeTrip {
   // 写真情報設定
   private async setPhotoInfo(locationID: number, photoID: number){
     // 時系列写真情報リスト取得
+    console.log(await this._indexedDbService.getTrnPhotoInfo());
     this.photoInfoAllList = await this._indexedDbService.getTrnPhotoInfo();
 
     // timeTrip情報を設定
@@ -226,21 +224,4 @@ export class TimeTrip {
 
   	return 1;
   }
-}
- 
-class LocationInfo {
-  LocationID: number;
-  Address: string;
-  Latitude: number;
-  Longitude: number;
-}
-
-class TimeTripPhotoInfo {
-  PhotoID: number;
-  Year: number;
-  LocationID: number;
-  Title: string;
-  Comment: string;
-  Bin: string;
-  LastUpdateDate: string;
 }

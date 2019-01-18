@@ -44,7 +44,11 @@ export class Map implements OnInit {
   addressList:any[];
   // #endregion
 
-  constructor(private _navigator: OnsNavigator, private _httpService: HttpService, private _googleMapsAPIWrapperEx: GoogleMapsAPIWrapperEx, private _params: Params) {}
+  constructor(private _navigator: OnsNavigator, 
+    private _httpService: HttpService, 
+    private _indexedDbService: IndexedDbService,
+    private _googleMapsAPIWrapperEx: GoogleMapsAPIWrapperEx, 
+    private _params: Params) {}
 
   async ngOnInit() {
     this.presentLat = this._params.data.PresentLat;
@@ -144,12 +148,12 @@ export class Map implements OnInit {
   // #region データ取得
   async getMapData(lat:number, lng:number){
     //var data = await this._indexedDbService.getMstLocationByRange(lat,lng);
-    var data = await this._httpService.GetLocation(lat, lng, null).toPromise();
-    if(data.statusCd == StatusCd.success){
+    var res = await this._httpService.GetLocation(lat, lng, null);
+    if(res.statusCd == StatusCd.success){
       console.log('データ取得完了');
-      data.locations.forEach(data => {
-        this.markers.push(
-          { LocationID:data.locationID,
+      for(let data of res.locations){
+        this.markers.push({ 
+            LocationID:data.locationID,
             Title:data.title,
             Address:data.address,
             Latitude:data.latitude,
@@ -157,7 +161,9 @@ export class Map implements OnInit {
             iconUrl:this.markerPinNormal
           }
         );
-      });
+
+        await this._httpService.GetPhoto(data.locationID, null);
+      };
     }else{
       console.log('データが取得できなかった');
       this.markers = [];
@@ -171,8 +177,10 @@ export class Map implements OnInit {
     if(this.txtTitle == ''){
       this.alertNonInputTxt();
     }else{
-      var ret = await this._httpService.AddLocation(this.txtTitle, this.address, lat, lng).toPromise();
-      // this._indexedDbService.createMstImg(this.createObj(lat, lng, this.txtTitle, this.address));    
+      var ret = await this._httpService.AddLocation(this.txtTitle, this.address, lat, lng);
+      // if(ret.statusCd == StatusCd.success){
+      //   this._indexedDbService.createMstImg(this.createObj(ret.locationID, lat, lng, this.txtTitle, this.address));    
+      // }
       this.changeCenter(lat,lng);
       await this.getMapData(lat,lng);
       this.displayPin();
@@ -183,8 +191,8 @@ export class Map implements OnInit {
   // #endregion
  
   // #region ◆地点登録DBオブジェクト生成◆
-  createObj(lat:number, lng:number, tit:string, address:string){
-    return { Title: tit, Address:address, Latitude:lat, Longitude:lng };
+  createObj(locationID: number, lat:number, lng:number, tit:string, address:string){
+    return { LocationID: locationID,Title: tit, Address:address, Latitude:lat, Longitude:lng };
   }
   // #endregion
 

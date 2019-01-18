@@ -7,8 +7,8 @@
             "packageType": "development"
         },
         "release": {
-            "codeSignIdentity": "iPhone Developer: Tomoyuki Sato (HJ2AYGR3SY)",
-            "provisioningProfile": "70f699ad-faf1-4adE-8fea-9d84738fb306",
+            "codeSignIdentity": "iPhone Distribution: NIKKO INFORMATION SYSTEM CO.,LTD.(ZTN5G9PJPV)",
+            "provisioningProfile": "79ba83be-50c1-4a25-ba6a-478b47e5b118",
             "developmentTeam": "ZTN5G9PJPV",
             "packageType": "app-store"
         }

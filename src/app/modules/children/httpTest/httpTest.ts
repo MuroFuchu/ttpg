@@ -27,7 +27,7 @@ export class httpTest {
   }
 
   async goGetLocation() {
-    var location = await this._httpService.GetLocation(Number(this.arg1), Number(this.arg2), Number(this.arg3)).toPromise();
+    var location = await this._httpService.GetLocation(Number(this.arg1), Number(this.arg2), Number(this.arg3));
     let m;
     for (let key of Object.keys(location)) {
       console.log(key, location[key]);
@@ -51,7 +51,7 @@ export class httpTest {
   }
   
   async goAddLocation() {
-    var location = await this._httpService.AddLocation(this.arg1, this.arg2, Number(this.arg3), Number(this.arg4)).toPromise();
+    var location = await this._httpService.AddLocation(this.arg1, this.arg2, Number(this.arg3), Number(this.arg4));
     for (let key of Object.keys(location)) {
       console.log(key, location[key]);
     }
@@ -59,7 +59,7 @@ export class httpTest {
   }
 
   async goGetPhoto() {
-    var photo = await this._httpService.GetPhoto(Number(this.arg1), Number(this.arg2)).toPromise();
+    var photo = await this._httpService.GetPhoto(Number(this.arg1), Number(this.arg2));
     let m;
     for(let k of Object.keys(photo)){
       console.log(k, photo[k]);
@@ -75,7 +75,7 @@ export class httpTest {
   }
 
   async goAddPhoto() {
-    var photo = await this._httpService.AddPhoto(Number(this.arg1), Number(this.arg2), this.arg3, this.arg4).toPromise();
+    var photo = await this._httpService.AddPhoto(Number(this.arg1), Number(this.arg2), this.arg3, this.arg4);
     ons.notification.alert({ messageHTML: `statusCd:${photo.statusCd}<br>photoId:${photo.photoID}`, title:'AddPhoto' });
   }
 
