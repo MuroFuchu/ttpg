@@ -76,8 +76,8 @@ export class Map implements OnInit {
       function(position){
         comp.presentLat = position.coords.latitude;
         comp.presentLng = position.coords.longitude;
-        //comp.presentLat =  42.319744;// 室蘭NISCO仕様
-        //comp.presentLng = 140.986007;// 室蘭NISCO仕様
+        // comp.presentLat =  42.319744;// 室蘭NISCO仕様
+        // comp.presentLng = 140.986007;// 室蘭NISCO仕様
         //comp.presentLat =  39.640479;// 宮古駅仕様
         //comp.presentLng = 141.946646;// 宮古駅仕様
 
@@ -87,8 +87,8 @@ export class Map implements OnInit {
       },
       function(){
         ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
-          //comp.presentLat =  42.319744;// 室蘭NISCO仕様
-          //comp.presentLng = 140.986007;// 室蘭NISCO仕様
+          // comp.presentLat =  42.319744;// 室蘭NISCO仕様
+          // comp.presentLng = 140.986007;// 室蘭NISCO仕様
           //comp.presentLat =  39.640479;// 宮古駅仕様
           //comp.presentLng = 141.946646;// 宮古駅仕様
           comp.changeCenter(comp.presentLat,comp.presentLng);
