@@ -33,6 +33,15 @@ export class IndexedDbService {
         this.dexieService.addMultiple(this.MstLocationInfo,locationInfoObjects);
     }
 
+    public mergeMultipleLocationInfo(locationInfoObjects: Object[]){
+        this.dexieService.addOrUpdateMultiple(this.MstLocationInfo,locationInfoObjects);
+    }
+
+    public async addOneLocationInfo(LocationInfoObject: Object) {
+        var result = await this.dexieService.addOne(this.MstLocationInfo,LocationInfoObject);
+        return result;
+     }
+
     public async addOnePhotoInfo(photoInfoObject: Object) {
        var result = await this.dexieService.addOne(this.TrnPhotoInfo,photoInfoObject);
        return result;
@@ -41,6 +50,10 @@ export class IndexedDbService {
     public addMultiplePhotoInfo(photoInfoObjects: Object[]) {
         this.dexieService.addMultiple(this.TrnPhotoInfo,photoInfoObjects);
     }
+
+    public mergeMultiplePhotoInfo(photoInfoObjects: Object[]) {
+        this.dexieService.addOrUpdateMultiple(this.TrnPhotoInfo,photoInfoObjects);
+    }    
 
     public async getTrnPhotoInfoByKey(key: string) {
         var data = null;
@@ -60,6 +73,11 @@ export class IndexedDbService {
         return await this.dexieService.toArray(this.MstLocationInfo);
     }
 
+    // 登録されている画像を全取得する
+    public async getTrnPhotoInfo() {
+        return await this.dexieService.toArray(this.TrnPhotoInfo);
+    }
+
     // 指定した座標付近のマスタを取得する
     public async getMstLocationByRange(latitude:number, longitude:number){
         var half:number = 0.015;
@@ -71,13 +89,20 @@ export class IndexedDbService {
         return data.toArray();
     }
 
-    // 登録されている画像を全取得する
-    public async getTrnPhotoInfo() {
-        return await this.dexieService.toArray(this.TrnPhotoInfo);
-    }
-
     public deleteDatabase() {
         this.dexieService.deleteDataBase();
+    }
+
+    public deleteAllMstLocationInfo(){
+        this.dexieService.clearAll(this.MstLocationInfo);
+    }
+
+    public deleteAllTrnPhotoInfo(){
+        this.dexieService.clearAll(this.TrnPhotoInfo);
+    }
+
+    public deleteMstLocationInfoMutiple(keys: number[]) {
+        this.dexieService.deleteMultiple(this.MstLocationInfo, keys);
     }
 
     public deleteTrnPhotoInfoMutiple(keys: number[]) {

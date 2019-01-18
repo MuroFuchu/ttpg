@@ -14,19 +14,21 @@ export class AppComponent {
   constructor(private indexedDbService: IndexedDbService, private getJsonService:GetJsonService) {}
 
   async ngOnInit() {
+    
     var flg = await this.CheckInitData();
 
     if(flg) {
       console.log('データ初期化するよ');
-      var MstLocationInfo = await this.getJsonService.GetJson('MstLocation').toPromise();
+      //var MstLocationInfo = await this.getJsonService.GetJson('MstLocation').toPromise();
       //console.log(MstLocationInfo);
-      this.indexedDbService.addMultipleLocationInfo(MstLocationInfo);
+      //this.indexedDbService.addMultipleLocationInfo(MstLocationInfo);
       
-      var TrnPhotoInfo = await this.getJsonService.GetJson('TrnPhoto').toPromise();
+      //var TrnPhotoInfo = await this.getJsonService.GetJson('TrnPhoto').toPromise();
       //console.log(TrnPhotoInfo);
-      this.indexedDbService.addMultiplePhotoInfo(TrnPhotoInfo);
+      //this.indexedDbService.addMultiplePhotoInfo(TrnPhotoInfo);
       this.indexedDbService.cheakedInitData();
     }
+    
   }
 
   async CheckInitData() {

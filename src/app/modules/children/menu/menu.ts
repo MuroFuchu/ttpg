@@ -80,8 +80,6 @@ export class Menu {
         console.log("Get Geo OK.");
       },
       function(){
-        comp.presentLat = null;
-        comp.presentLng = null;
         console.error("Get Geo NG.");
         // ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
         // }});

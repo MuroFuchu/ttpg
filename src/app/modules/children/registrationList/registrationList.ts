@@ -37,29 +37,16 @@ export class RegistrationList {
     }
 
     // DBから位置情報一覧を取得
-    var location = await this._httpService.GetLocation(presentLat, presentLng, 15).toPromise();
+    var location = await this._httpService.GetLocation(presentLat, presentLng, 15);
     if (location.statusCd != StatusCd.success){
       //ons.notification.alert({ messageHTML: `ステータスコード：${location.statusCd}<br>location.messages.join()`, title:'エラー'});
       return;
     }
 
-    // localDBの写真情報削除
-    var data = await this._indexedDbService.getTrnPhotoInfo();
-    if (data == null)
-    {
-      console.log('データを取得できなかった');
-    }else{
-      let keys = [];
-      data.forEach(registList => {
-        keys.push(registList.PhotoID);
-      });
-      this._indexedDbService.deleteTrnPhotoInfoMutiple(keys);
-    }
-
     this.isVisible = false;
     for(let l of location.locations){
       // DBから写真一覧を取得
-      let photo = await this._httpService.GetPhoto(l.locationID, null).toPromise();
+      let photo = await this._httpService.GetPhoto(l.locationID, null);
       if(photo.statusCd != StatusCd.success){
         continue;
       }
@@ -74,15 +61,9 @@ export class RegistrationList {
           Comment: p.comment,
           Bin: decodeURIComponent(p.bin)//p.bin.replace(/\s+/g, "")
         });
-
-        // localDBに登録
-        this._indexedDbService.addOnePhotoInfo(p);
       }
     }
     this.isVisible = true;
-
-    console.log(location);
-    console.log(this.RegistrationLists);
   }
   
   // 写真をタップした時のイベント

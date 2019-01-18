@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { extend } from 'webdriver-js-extender';
+import { IndexedDbService } from './IndexedDbService';
+import { promise } from 'protractor';
+import { CommaExpr } from '@angular/compiler';
 
 @Injectable()
 export class HttpService {
     private webApiEndPoint = "http://172.16.0.50/TimeTripPhotoGallery.Web/api";
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private _indexedDbService: IndexedDbService) {}
 
     /**
      * DBに登録されている位置情報を取得して返します。
@@ -15,14 +18,33 @@ export class HttpService {
      * @param longitude 現在地の経度。
      * @param zoom 検索範囲（GoogleMAPのZoom値）、未指定時は全件。
      */
-    GetLocation(latitude: number, longitude: number, zoom: number): Observable<GetLocationResponseModel> {
+    async GetLocation(latitude: number, longitude: number, zoom: number): Promise<GetLocationResponseModel> {
         let params = new HttpParams()
             .append("Latitude", String(latitude))
             .append("Longitude", String(longitude))
             .append("Zoom", zoom != null ? String(zoom) : "");
-        // let headers = new HttpHeaders().set('Authorization', `Bearer ${''}`);
 
-        return this.http.get<GetLocationResponseModel>(`${this.webApiEndPoint}/GetLocation`, { params: params });
+        let res = await this.http.get<GetLocationResponseModel>(`${this.webApiEndPoint}/GetLocation`, { params: params }).toPromise();
+        
+        // 取得成功時ローカルDBを更新する
+        if(res.statusCd == StatusCd.success && res.locations.length > 0){
+            let locationList: LocalLocationInfo[] = [];
+            for(let l of res.locations){
+                locationList.push({
+                    LocationID: l.locationID,
+                    Address: l.address,
+                    Latitude: l.latitude,
+                    Longitude: l.longitude
+                });
+            }
+            await this._indexedDbService.mergeMultipleLocationInfo(locationList);  
+        }
+
+        return {
+            statusCd: res.statusCd,
+            messages: res.messages,
+            locations: res.locations
+        };
     }
 
     /**
@@ -32,15 +54,31 @@ export class HttpService {
      * @param latitude ピンを立てた位置の緯度。
      * @param longitude ピンを立てた位置の経度
      */
-    AddLocation(title: string, address: string, latitude: number, longitude: number): Observable<any> {
+    async AddLocation(title: string, address: string, latitude: number, longitude: number): Promise<AddLocationResponseModel> {
         let params = new HttpParams()
         .append("Title", title)
         .append("Address", address)
         .append("Latitude", String(latitude))
         .append("Longitude", String(longitude));
 
-        //return this.http.put<AddLocationResponseModel>(`${this.webApiEndPoint}/AddLocation`, params);
-        return this.http.put<any>(`${this.webApiEndPoint}/AddLocation`, params);
+        var res = await this.http.put<AddLocationResponseModel>(`${this.webApiEndPoint}/AddLocation`, params).toPromise();
+
+        // ローカルDBにInsertする
+        if(res.statusCd == StatusCd.success){
+            let location: LocalLocationInfo = {
+                LocationID: res.locationID,
+                Address: address,
+                Latitude: latitude,
+                Longitude: longitude
+            }
+            await this._indexedDbService.addOneLocationInfo(location);
+        }
+
+        return {
+            statusCd: res.statusCd,
+            messages: res.messages,
+            locationID: res.locationID
+        };
     }
 
     /**
@@ -48,12 +86,33 @@ export class HttpService {
      * @param locationID 取得したい写真の位置を特定するキー。
      * @param photoID 取得したい写真を特定するキー、未指定時はすべての写真が対象となる。
      */
-    GetPhoto(locationID: number, photoID: number): Observable<GetPhotoResponseModel> {
+    async GetPhoto(locationID: number, photoID: number): Promise<GetPhotoResponseModel> {
         let params = new HttpParams()
             .append("LocationID", String(locationID))
             .append("PhotoID", photoID != null ? String(photoID) : "");
 
-        return this.http.get<GetPhotoResponseModel>(`${this.webApiEndPoint}/GetPhoto`, { params: params });
+        var res = await this.http.get<GetPhotoResponseModel>(`${this.webApiEndPoint}/GetPhoto`, { params: params }).toPromise();
+
+        // 取得成功時ローカルDBを更新する
+        if(res.statusCd == StatusCd.success && res.photos.length > 0){
+            let photoList: LocalPhotoInfo[] = [];
+            for(let p of res.photos){
+                photoList.push({
+                    PhotoID: p.photoID,
+                    LocationID: locationID,
+                    Year: p.year,
+                    Comment: p.comment,
+                    Bin:  decodeURIComponent(p.bin)
+                });
+            }
+            await this._indexedDbService.mergeMultiplePhotoInfo(photoList);
+        }
+
+        return {
+            statusCd: res.statusCd,
+            messages: res.messages,
+            photos: res.photos   
+        };
     }
     
     /**
@@ -63,7 +122,7 @@ export class HttpService {
      * @param comment 入力されたコメント。
      * @param bin 写真のバイナリデータ。
      */
-    AddPhoto(year: number, locationID: number, comment: string, bin: string): Observable<AddPhotoResponseModel> {
+    async AddPhoto(year: number, locationID: number, comment: string, bin: string): Promise<AddPhotoResponseModel> {
         let params = new HttpParams()
             .append("Year", String(year))
             .append("LocationID", String(locationID))
@@ -71,7 +130,25 @@ export class HttpService {
             .append("Bin", encodeURIComponent(bin));
         let headers = new HttpHeaders().set('Authorization', `Bearer ${''}`);
 
-        return this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params, {headers: headers});
+        let res = await this.http.put<AddPhotoResponseModel>(`${this.webApiEndPoint}/AddPhoto`, params, {headers: headers}).toPromise();
+        
+        // ローカルDBにInsertする
+        if(res.statusCd == StatusCd.success){
+            let photo: LocalPhotoInfo = {
+                PhotoID: res.photoID,
+                LocationID: locationID,
+                Year: year,
+                Comment: comment,
+                Bin: bin
+            }
+            await this._indexedDbService.addOnePhotoInfo(photo);
+        }
+
+        return {
+            statusCd: res.statusCd,
+            messages: res.messages,
+            photoID: res.photoID
+        };
     }    
 }
 
@@ -183,4 +260,21 @@ export class AddPhotoResponseModel extends HttpResponseModel {
     photoID: number;
 }
 
+//#endregion
+
+//#region localDBの型定義情報
+export class LocalLocationInfo {
+    LocationID: number;
+    Address: string;
+    Latitude: number;
+    Longitude: number;
+  }
+  
+export class LocalPhotoInfo {
+  PhotoID: number;
+  Year: number;
+  LocationID: number;
+  Comment: string;
+  Bin: string;
+}
 //#endregion

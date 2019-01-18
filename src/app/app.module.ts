@@ -28,6 +28,7 @@ import { GetJsonService } from './services/GetJsonService';
 import { GoogleMapsAPIWrapperEx } from './services/GoogleMapsAPIWrapperEx';
 import { DexieModule, DexieConfig } from './services/ngx-dexie';
 import { HttpService } from "./services/HttpService";
+import { ReduceImageSizeService } from 'src/app/services/ReduceImageSizeService';
  
 const config: DexieConfig = {
   databaseName: 'TimeTripPhotoGallery',//your database name here
@@ -74,6 +75,7 @@ const config: DexieConfig = {
     GetJsonService,
     GoogleMapsAPIWrapperEx,
     HttpService,
+    ReduceImageSizeService,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
