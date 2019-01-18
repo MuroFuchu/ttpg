@@ -70,7 +70,7 @@ export class ReduceImageSizeService {
 
                         resolve(info);
                     }
-                    image.src = comp.buffer_to_string(reader.result);
+                    image.src = reader.result;
                 }
                 reader.readAsDataURL(target);
             }
@@ -100,7 +100,7 @@ export class ReduceImageSizeService {
 
         var comp = this;
         reader.onloadend = function () {
-            ret.fileDataUrl = comp.buffer_to_string(reader.result);
+            ret.fileDataUrl = reader.result;
             ret.fileName = target.name;
             ret.fileSize = target.size;
             ret.fileType = target.type;
@@ -116,7 +116,7 @@ export class ReduceImageSizeService {
         var fr = new FileReader()
         var pr = new Promise<string>((resolve, reject) => {
             fr.onload = eve => {
-                resolve(this.buffer_to_string(fr.result))
+                resolve(fr.result)
             }
             fr.onerror = eve => {
                 reject(fr.error)
@@ -125,9 +125,6 @@ export class ReduceImageSizeService {
 
         fr.readAsDataURL(blob)
         return pr
-    }
-    buffer_to_string(buf) {
-        return String.fromCharCode.apply("", new Uint16Array(buf))
     }
 }
 

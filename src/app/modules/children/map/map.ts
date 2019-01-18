@@ -37,7 +37,6 @@ export class Map implements OnInit {
   markerPinNormal: string = './assets/contents/icons/pin_normal.svg';
   markerPinSelected: string = './assets/contents/icons/pin_free.svg';
   nowPlacePin: string = './assets/contents/icons/pin_nowPlace.svg';
-  iconPathInfo: string = './assets/contents/buttons/showInfo.png';
   iconPathTrip: string = './assets/contents/buttons/goToTrip.png';
   iconPathRegist: string = './assets/contents/buttons/goToRegist.png';
   iconPathRegist2: string = 'src/';
@@ -229,11 +228,6 @@ export class Map implements OnInit {
   // #region 地点名未入力
   alertNonInputTxt() {
     ons.notification.alert({ message: 'この地点がどこなのか分かる地点名を入力しましょう', title:'地点の名前を入力しましょう！' });
-  }
-  // #endregion
-  // #region 情報表示
-　showInfo() {
-    ons.notification.alert({ message: 'LocalWiki等のLOD取得し、この場所の情報やうんちくを表示させたい。', title:'未完成( ;∀;)'  });
   }
   // #endregion
   // #endregion
