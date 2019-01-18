@@ -19,35 +19,25 @@
       fontWeight: '700'
     }
   ">
-    <agm-info-window>
+    <agm-info-window #infoWindow>
       <table>
-        <!-- <tr>
-          <td>x座標：</td>
-          <td>{{lastClicklat}}</td>
+        <tr>
+          <td colspan="2">この地点を登録する</td>
         </tr>
         <tr>
-          <td>y座標：</td>
-          <td>{{lastClicklng}}</td>
-        </tr> -->
-        <tr>
-          <td>この地点を登録する</td>
-          <td></td>
-        </tr>
-        <tr>
-            <td>地点名</td>
-            <td><ons-input id="mapTitle" [(value)]="txtTitle"></ons-input></td>     
+            <td class="w-30">地点名</td>
+            <td class="w-70"><ons-input id="mapTitle" [(value)]="txtTitle"></ons-input></td>     
         </tr>
         <tr>
             <td>住所</td>
             <td>
-              <ons-select [(ngModel)]="selectedAddresses" style="width:200px;">
+              <ons-select [(ngModel)]="selectedAddresses">
                 <option *ngFor="let address of addressList">{{address?.formatted_address}}</option>
               </ons-select>
             </td>          
         </tr>
         <tr>
-          <td>ボタン</td>
-          <td><ons-button (click)="registMapMst(lastClicklat, lastClicklng)" modifier="large" class="btn_regist_point">地点を登録</ons-button></td>
+          <td colspan="2"><ons-button (click)="registMapMst(lastClicklat, lastClicklng, infoWindow)" modifier="large" class="btn_regist_point">登録</ons-button></td>
         </tr>
       </table>
     </agm-info-window>
@@ -80,14 +70,6 @@
             <td>住所：</td>
             <td>{{m.Address}}</td>
         </tr>
-        <!-- <tr>
-          <td>x座標：</td>
-          <td>{{m.Latitude}}</td>
-        </tr>
-        <tr>
-          <td>y座標：</td>
-          <td>{{m.Longitude}}</td>
-        </tr> -->
       </table>
     </agm-info-window>
   </agm-marker>
