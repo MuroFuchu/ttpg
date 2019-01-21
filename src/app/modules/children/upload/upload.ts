@@ -45,7 +45,7 @@ export class Upload {
   // ファイル選択ボタン
   public async changePhoto(event)
   {
-    let size = 50000;
+    let size = 1024 * 300;
     let files: File[] = event.target.files;
     let file: File = files[0];
 
