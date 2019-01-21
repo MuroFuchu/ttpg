@@ -236,7 +236,7 @@ export class Map implements OnInit {
   // #endregion
   // #region 使い方
   helpPopup() {
-    ons.notification.alert({ message: '地図上をダブルタップして<br/>地点を登録できます', title:'地点の登録の仕方' });
+    ons.notification.alert({ message: '地図上をダブルタップして<br/>地点を登録できます', title:'地点登録の仕方' });
   }
   // #endregion
   // #endregion
