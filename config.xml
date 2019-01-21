@@ -101,7 +101,7 @@
             <string />
         </config-file>
         <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
-            <string>現在値近辺に登録されている位置情報を取得するため、現在値情報へアクセスいたします。<string>
+            <string>現在値近辺に登録されている位置情報を取得するため、現在値情報へアクセスいたします。</string>
         </config-file>
     </platform>
     <plugin name="cordova-plugin-geolocation" spec="4.0.1" />
