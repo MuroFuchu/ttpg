@@ -39,7 +39,7 @@ export class Map implements OnInit {
   nowPlacePin: string = './assets/contents/icons/pin_nowPlace.svg';
   iconPathTrip: string = './assets/contents/buttons/goToTrip.png';
   iconPathRegist: string = './assets/contents/buttons/goToRegist.png';
-  iconPathRegist2: string = 'src/';
+  iconPathInfo: string = './assets/contents/buttons/showInfo.png';
   addressList:any[];
   // #endregion
 
@@ -60,6 +60,8 @@ export class Map implements OnInit {
       this.displayPin();
     }else{
       ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
+        // comp.presentLat = 35.690694;
+        // comp.presentLng = 139.691971;
         comp.changeCenter(comp.presentLat,comp.presentLng);
         comp.getMapData(comp.centerLat,comp.centerLng);
         comp.displayPin();
@@ -90,6 +92,8 @@ export class Map implements OnInit {
           // comp.presentLng = 140.986007;// 室蘭NISCO仕様
           //comp.presentLat =  39.640479;// 宮古駅仕様
           //comp.presentLng = 141.946646;// 宮古駅仕様
+          // comp.presentLat = 35.690694;
+          // comp.presentLng = 139.691971;
           comp.changeCenter(comp.presentLat,comp.presentLng);
           comp.getMapData(comp.centerLat,comp.centerLng);
           comp.displayPin();
@@ -228,6 +232,11 @@ export class Map implements OnInit {
   // #region 地点名未入力
   alertNonInputTxt() {
     ons.notification.alert({ message: 'この地点がどこなのか分かる地点名を入力しましょう', title:'地点の名前を入力しましょう！' });
+  }
+  // #endregion
+  // #region 使い方
+  helpPopup() {
+    ons.notification.alert({ message: '地図上をダブルタップして<br/>地点を登録できます', title:'地点登録の仕方' });
   }
   // #endregion
   // #endregion

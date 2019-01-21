@@ -7,7 +7,7 @@
             "packageType": "development"
         },
         "release": {
-            "codeSignIdentity": "iPhone Distribution: NIKKO INFORMATION SYSTEM CO.,LTD.(ZTN5G9PJPV)",
+            "codeSignIdentity": "iPhone Distribution: NIKKO INFORMATION SYSTEM CO.,LTD. (ZTN5G9PJPV)",
             "provisioningProfile": "79ba83be-50c1-4a25-ba6a-478b47e5b118",
             "developmentTeam": "ZTN5G9PJPV",
             "packageType": "app-store"
