@@ -22,16 +22,14 @@ export class Map implements OnInit {
   presentLng: number;
   centerLat:number;
   centerLng:number;
-  lastClicklat: number;
-  lastClicklng: number;
+  lastClicklat: number; // 最後にタップした座標(緯度)
+  lastClicklng: number; // 最後にタップした座標(経度)
   selectedMarkerVisibled : boolean = false;
   markers: marker[] = [];
   zone: NgZone;
   apiLoader: MapsAPILoader;
   apiWrapper:GoogleMapsAPIWrapper;
   map;
-  lastOpenWindow;
-  createWindow = null;
   txtTitle: string = '';
   selectedAddresses: string = '';// 住所を選択した値が入る
   selectedMarkerPin: string;
@@ -61,8 +59,6 @@ export class Map implements OnInit {
       this.displayPin();
     }else{
       ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
-        // comp.presentLat = 35.690694;
-        // comp.presentLng = 139.691971;
         comp.changeCenter(comp.presentLat,comp.presentLng);
         comp.getMapData(comp.centerLat,comp.centerLng);
         comp.displayPin();
@@ -78,10 +74,6 @@ export class Map implements OnInit {
       function(position){
         comp.presentLat = position.coords.latitude;
         comp.presentLng = position.coords.longitude;
-        // comp.presentLat =  42.319744;// 室蘭NISCO仕様
-        // comp.presentLng = 140.986007;// 室蘭NISCO仕様
-        //comp.presentLat =  39.640479;// 宮古駅仕様
-        //comp.presentLng = 141.946646;// 宮古駅仕様
 
         comp.changeCenter(comp.presentLat,comp.presentLng);
         comp.getMapData(comp.centerLat,comp.centerLng);
@@ -89,12 +81,6 @@ export class Map implements OnInit {
       },
       function(){
         ons.notification.alert({ message: '地点情報を取得できるように設定してからご使用くださいね！', title:'現在地が取得できませんでした', callback:function(){
-          // comp.presentLat =  42.319744;// 室蘭NISCO仕様
-          // comp.presentLng = 140.986007;// 室蘭NISCO仕様
-          //comp.presentLat =  39.640479;// 宮古駅仕様
-          //comp.presentLng = 141.946646;// 宮古駅仕様
-          // comp.presentLat = 35.690694;
-          // comp.presentLng = 139.691971;
           comp.changeCenter(comp.presentLat,comp.presentLng);
           comp.getMapData(comp.centerLat,comp.centerLng);
           comp.displayPin();
@@ -121,7 +107,6 @@ export class Map implements OnInit {
   // #endregion
   // #region ダブルタップした地点の情報を登録するための情報を取得する
   async dblClickMap($event: MouseEvent){
-    this.lastOpenWindow = this;
     this.resetInput();
     this.selectedMarkerVisibled = true;
     this.lastClicklat = $event.coords.lat;
@@ -132,7 +117,6 @@ export class Map implements OnInit {
   // #endregion
   // #region タップした地点の情報を取得する
   clickMarker(m: marker){
-    this.lastOpenWindow = this;
     this.locationID = m.LocationID;
     this.address = m.Address;
     this.resetPinMarker();//ピンマーカーをすべて初期化する
@@ -177,7 +161,7 @@ export class Map implements OnInit {
   }
   // #endregion
   // #region 地点登録
-  async registMapMst(lat:number, lng:number, infoWindow, infoMarker:AgmMarker){
+  async registMapMst(lat:number, lng:number, infoWindow){
     var address;
     address = this._googleMapsAPIWrapperEx.getAddress(lat, lng);
     if(this.txtTitle == ''){
