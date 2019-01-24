@@ -110,12 +110,12 @@ export class Map implements OnInit {
   displayPin(){
     this.apiWrapper = new GoogleMapsAPIWrapper(this.apiLoader,this.zone);
     this.apiWrapper.getCenter()
-    .then(function(value){
-      console.log(value);
-    })
-    .catch(function(value){
-      console.log(value);
-    });
+      .then(function(value){
+        console.log(value);
+      })
+      .catch(function(value){
+        console.log(value);
+      });
   }
   // #endregion
   // #region ダブルタップした地点の情報を登録するための情報を取得する
@@ -182,13 +182,14 @@ export class Map implements OnInit {
       this.alertNonInputTxt();
     }else{
       var ret = await this._httpService.AddLocation(this.txtTitle, this.selectedAddresses, lat, lng);
-      // if(ret.statusCd == StatusCd.success){
-      //   this._indexedDbService.createMstImg(this.createObj(ret.locationID, lat, lng, this.txtTitle, this.address));    
-      // }
-      this.changeCenter(lat,lng);
-      await this.getMapData(lat,lng);
-      this.displayPin();
-      infoWindow.close();
+      if(ret.statusCd != StatusCd.success){
+        ons.notification.alert(ret.messages.join('\r\n'));
+      }else{
+        this.changeCenter(lat,lng);
+        await this.getMapData(lat,lng);
+        this.displayPin();
+        infoWindow.close();
+      }
     }
   }
   // #endregion
