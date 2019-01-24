@@ -24,6 +24,7 @@ export class Map implements OnInit {
   centerLng:number;
   lastClicklat: number;
   lastClicklng: number;
+  selectedMarkerVisibled : boolean = false;
   markers: marker[] = [];
   zone: NgZone;
   apiLoader: MapsAPILoader;
@@ -122,6 +123,7 @@ export class Map implements OnInit {
   async dblClickMap($event: MouseEvent){
     this.lastOpenWindow = this;
     this.resetInput();
+    this.selectedMarkerVisibled = true;
     this.lastClicklat = $event.coords.lat;
     this.lastClicklng = $event.coords.lng;
     this.addressList = await this._googleMapsAPIWrapperEx.getAddress(this.lastClicklat, this.lastClicklng);//座標から住所を取得する
@@ -175,20 +177,21 @@ export class Map implements OnInit {
   }
   // #endregion
   // #region 地点登録
-  async registMapMst(lat:number, lng:number, infoWindow){
+  async registMapMst(lat:number, lng:number, infoWindow, infoMarker:AgmMarker){
     var address;
     address = this._googleMapsAPIWrapperEx.getAddress(lat, lng);
     if(this.txtTitle == ''){
       this.alertNonInputTxt();
     }else{
       var ret = await this._httpService.AddLocation(this.txtTitle, this.selectedAddresses, lat, lng);
-      if(ret.statusCd != StatusCd.success){
-        ons.notification.alert(ret.messages.join('\r\n'));
-      }else{
+      if(ret.statusCd == StatusCd.success){
         this.changeCenter(lat,lng);
         await this.getMapData(lat,lng);
         this.displayPin();
         infoWindow.close();
+        this.selectedMarkerVisibled = false;
+      }else{
+        ons.notification.alert({ message : ret.messages.join('\r\n'), title : '登録できませんでした' });
       }
     }
   }

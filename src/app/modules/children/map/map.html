@@ -3,7 +3,8 @@
   <div class="center">地図から探す</div>
 </ons-toolbar>
 <agm-map [latitude]="centerLat" [longitude]="centerLng" [zoom]=15 [disableDoubleClickZoom]="true" (mapDblClick)="dblClickMap($event)">
-  <agm-marker
+  <agm-marker #infoMarker
+    *ngIf="selectedMarkerVisibled"
     [latitude]="lastClicklat" 
     [longitude]="lastClicklng"
     [iconUrl]="{
@@ -17,8 +18,8 @@
       text: '選択した地点',
       fontSize: '10px',
       fontWeight: '700'
-    }
-  ">
+      }"
+    >
     <agm-info-window #infoWindow>
       <table>
         <tr>
@@ -37,7 +38,7 @@
             </td>          
         </tr>
         <tr>
-          <td colspan="2"><ons-button (click)="registMapMst(lastClicklat, lastClicklng, infoWindow)" modifier="large" class="btn_regist_point">登録</ons-button></td>
+          <td colspan="2"><ons-button (click)="registMapMst(lastClicklat, lastClicklng, infoWindow, infoMarker)" modifier="large" class="btn_regist_point">登録</ons-button></td>
         </tr>
       </table>
     </agm-info-window>
