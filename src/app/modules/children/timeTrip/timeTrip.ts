@@ -83,7 +83,7 @@ export class TimeTrip {
     this.check = true;
 
     // 位置情報リスト取得
-    console.log(await this._indexedDbService.getMstLocationInfo());
+    //console.log(await this._indexedDbService.getMstLocationInfo());
     this.locationInfoList = await this._indexedDbService.getMstLocationInfo();
     if(this.locationInfoList){
       this.location = this.locationInfoList.find(f => f.LocationID == locationId);
