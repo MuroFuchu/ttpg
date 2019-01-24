@@ -33,7 +33,9 @@ export class Menu {
       cancelable: true,
       callback: i => {
         if (i == 1) {
-          this._indexedDbService.deleteDatabase();
+          //this._indexedDbService.deleteDatabase();
+          this._indexedDbService.deleteAllMstLocationInfo();
+          this._indexedDbService.deleteAllTrnPhotoInfo();
         }
       }
     });
